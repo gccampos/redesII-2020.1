@@ -1,0 +1,91 @@
+Descrição e Objetivo
+
+Esse trabalho em grupo consiste em um aprofundamento do estudo dos mecanismos de detecção e correção de erros utilizados em redes de computadores e outros sistemas computacionais. O trabalho é constituído da implementação e análise de certos métodos simples de correção de erros. Mais especificamente, esse trabalho pode ser dividido nas seguintes etapas:
+
+- Implementar funções de codificação e decodificação de um pacote, utilizando o método de paridade bidimensional com três tamanhos diferentes de matriz de paridade (ou parametrizável).
+- Executar experimentos com os métodos implementados, avaliando métricas como a taxa de erro de bits e o overhead introduzido pelos métodos.
+- Escrever um relatório, documentando as implementações realizadas e reportando a metodologia e resultados obtidos na avaliação.
+
+Para auxiliar nas tarefas de implementação envolvidas nesse trabalho, estão sendo disponibilizadas implementações de referência. Tais implementações consistem em variações de uma espécie de simulador de transmissão de pacotes. Esse simulador gera um pacote aleatório, realiza a codificação desse pacote utilizando um determinado método de detecção e correção de erros, insere erros aleatórios no pacote, realiza a decodificação de acordo com o método utilizado e, ao final, conta o número de bits errados encontrados (em relação ao conteúdo original do pacote aleatório gerado). Esse processo é repetido por uma quantidade determinada de vezes e, por fim, o programa exibe algumas estatísticas referentes às simulações.
+
+As implementações de referência estão disponíveis em duas linguagens: C e Python. Para cada linguagem, estão disponíveis os seguintes arquivos:
+
+ - ParidadeBidimensional.c / ParidadeBidimensional.py: codificação e decodificação realizadas de acordo com o método de paridade bidimensional usando uma matriz 2 X 4;
+ - noFEC.c / noFEC.py: sem codificação ou decodificação (i.e., não são adicionados bits de paridade e o pacote e transmitido exatamente como gerado);
+ - template.c / template.py: implementações incompletas a serem utilizadas como base para as implementações pedidas nessa especificação (as funções a serem completadas estão destacadas no código).
+
+As implementações em C fazem uso da biblioteca matemática da linguagem. Por isso, é necessário especificar opções adequadas durante o processo de compilação. Por exemplo, com o compilador gcc pode-se utilizar os seguintes comandos:
+
+# gcc ParidadeBidimensional.c -o ParidadeBidimensional -Wall -lm
+# gcc noFEC.c -o noFEC -Wall -lm
+
+Todos os programas recebem os mesmos argumentos através da linha de comando. Quando executados sem argumentos, todos exibem uma pequena ajuda, descrevendo esses parâmetros:
+
+# python noFEC.py
+
+Simulador de metodos de FEC/codificacao.
+
+Modo de uso:
+
+    .noFEC.py <tam_pacote> <reps> <prob. erro>
+
+Onde:
+
+    - <tam_pacote>: tamanho do pacote usado nas simulacoes (em bytes).
+    - <reps>: numero de repeticoes da simulacao.
+    - <prob. erro>: probabilidade de erro de bits (i.e., probabilidade de que um dado bit tenha seu valor alterado pelo canal.)
+
+Quando alimentados com parâmetros adequados, todos os programas devem gerar como saída algo similar a:
+
+# ./ParidadeBidimensional 1500 100 0.05
+
+Numero de transmissoes simuladas: 100
+Numero de bits transmitidos: 1200000
+Numero de bits errados inseridos: 105263
+Taxa de erro de bits (antes da decodificacao): 5.01%
+Numero de bits corrompidos apos decodificacao: 32012
+Taxa de erro de bits (apos decodificacao): 2.67%
+Numero de pacotes corrompidos: 100
+Taxa de erro de pacotes: 100.00%
+
+A ideia é que as implementações de referência provejam exemplos de como o grupo deverá implementar seu próprio código. Além disso, os arquivos de template podem (e devem) ser usados como base para as novas implementações. O template na linguagem C demanda a escrita de 3 funções (codificação, decodificação e tamanho do pacote codificado), enquanto o template em Python necessita apenas da reescrita de duas funções (codificação e decodificação).
+
+Os grupos são livres para escolher a linguagem de programação mais adequada ao desenvolvimento das suas implementações. A linguagem escolhida pode, inclusive, ser diferente de C ou Python. Nesse caso, no entanto, o grupo se responsabilizará por reimplementar as demais funcionalidades das implementações de referência na linguagem escolhida.
+Implementação da Paridade Bidimensional
+
+O grupo deverá realizar três implementações das rotinas de codificação e decodificação do método de paridade bidimensional com matrizes de dimensões diferentes (ou uma implementação que seja parametrizável pelas dimensões da matriz de paridade desejada). As dimensões escolhidas devem, obrigatoriamente, ser diferentes do 2 x 4 usado na implementação de referência.
+
+Avaliação
+
+Com base nas implementações realizadas e nas de referência fornecidas com essa especificação, o grupo deverá proceder à fase de avaliação dos métodos. Nessa fase, o grupo deverá realizar diversas execuções das várias implementações, variando parâmetros como:
+
+ - Probabilidade de inserção de erros em cada bit.
+ - Tamanho do pacote gerado.
+
+O número de repetições em cada execução é de escolha do grupo, mas deverá ser de, ao menos, 1000. Mais repetições fazem com que a execução seja mais demorada, mas geram amostras mais representativas estatisticamente (lembre-se, há aleatoriedade envolvida nessas execuções). Sugere-se utilizar valores de probabilidade de inserção de erros de bits de, no máximo, 0,5% (ou seja, 0,005). Valores muito maiores que este provavelmente prejudicarão a análise dos resultados.
+
+Os resultados das execuções devem ser documentados na forma de tabelas e/ou gráficos a serem incluídos no relatório e na apresentação do trabalho. Além de documentar os resultados, é fundamental que o grupo analise os resultados obtidos, tirando conclusões. Dentre as perguntas que se deseja responder com essa avaliação estão:
+
+ - Como os diferentes parâmetros afetam a eficiência dos métodos implementados?
+ - O quão eficazes esses métodos são em relação a uma solução sem utilização de mecanismos de codificação?
+ - Qual método (dentre os parâmetros da paridade bidimensional) foi mais eficiente em geral?
+ - É possível estabelecer uma relação entre o percentual de overhead introduzido (i.e., o quanto o pacote cresce com a adição de paridade) e a taxa de erro de bits resultante para cada um dos dois métodos?
+
+O relatório deverá documentar o desenvolvimento do trabalho realizado pelo grupo. Isso inclui uma breve documentação das implementações desenvolvidas (e.g., funções criadas, estruturas de dados usadas, abstrações), a listagem dos parâmetros escolhidos para a Paridade Bidimensional , a metodologia usada na avaliação e seus resultados.
+
+Como citado anteriormente, é fundamental que a avaliação inclua uma análise crítica dos resultados por parte do grupo. Assim, sugere-se que o relatório contemple as respostas (justificadas) para as perguntas apresentadas na seção anterior.
+
+Note que, caso o grupo tenha optado por uma linguagem de programação diferente de Python ou C, o relatório deverá conter uma descrição mais detalhada dos aspectos de implementação, incluindo a linguagem utilizada, instruções de compilação/execução e descrição de classes/módulos principais.
+
+Embora a parte de implementação do trabalho possa ser feita em qualquer linguagem, algumas restrições devem ser observadas:
+
+ - Os códigos de codificação e decodificação deverão ser de autoria dos membros do grupo, sem que se recorra a trechos de códigos de terceiros ou bibliotecas que implementem total ou parcialmente as funcionalidades aqui listadas (funções/métodos de manipulações básicas da linguagem escolhida podem ser utilizadas).
+ - O código final deve ser compilável/executável sem a necessidade de bibliotecas, frameworks ou ferramentas pagas.
+
+É importante que as implementações se concentrem exclusivamente nas rotinas de codificação e decodificação, sem alteração do funcionamento do restante do código (i.e., interface com usuário e restante da simulação das transmissões). O grupo pode criar funções/métodos/classes auxiliares, se achar conveniente, mas as demais partes do template não devem ter sua funcionalidade modificada.
+
+O relatório é de formato livre, sem limites inferiores ou superiores de páginas. Apenas como um guia geral, 5 páginas devem ser suficientes (embora não necessárias) para contemplar todos os itens listados nessa especificação.
+
+Os grupos poderão ser formados com no máximo 5 alunos.
+
+Os trabalhos devem ser entregues através dessa atividade do Google Classroom por apenas um dos integrantes do grupo. A entrega deve ser feita em formato zip, contendo o relatório em PDF e o código das implementações desenvolvidas. O relatório deve listar claramente os integrantes do grupo. Após a entrega, não serão aceitas modificações na lista de integrantes.

@@ -252,6 +252,7 @@ f.write('Taxa de erro de bits (apos decodificacao): {0:.2f}%\n'.format(
 f.write('Numero de pacotes corrompidos: {0:d}\n'.format(totalPacketErrorCount))
 f.write('Taxa de erro de pacotes: {0:.2f}%\n'.format(float(totalPacketErrorCount) / float(reps) * 100.0))
 f.close()
+
 print('Numero de transmissoes simuladas: {0:d}\n'.format(reps))
 print('Numero de bits transmitidos: {0:d}'.format(reps * packetLength * 8))
 print('Numero de bits errados inseridos: {0:d}\n'.format(totalInsertedErrorCount))
